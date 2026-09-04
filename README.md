@@ -1,12 +1,12 @@
 # ESP32 Low-Power Audio Prototype: Experimental Results
 
-> **Headline Result:** The prototype demonstrated sub-10% measured application CPU utilization (7.33%) and approximately 81.0 KB heap usage against a 256 KB project budget, while successfully maintaining a 1.5-second audio pre-roll buffer and wake-triggered Wi-Fi operation.
+> **Headline Result:** The prototype demonstrated sub-10% measured application CPU utilization (7.33% total, of which ~6% is strictly telemetry monitoring overhead) and approximately 81.0 KB heap usage against a 256 KB project budget, while successfully maintaining a 1.5-second audio pre-roll buffer and wake-triggered Wi-Fi operation.
 
 ## 1. Prototype Target vs. Measured Performance
 
 | Parameter | Measured Result | Target Constraint | Status |
 | --- | --- | --- | --- |
-| **CPU Utilization** | 7.33% | < 10.0% | **PASS** |
+| **CPU Utilization** | 7.33% *(~1.34% core app)* | < 10.0% | **PASS** |
 | **Heap Used** | 81.01 KB | < 256.0 KB | **PASS** |
 | **Heap Used vs Budget** | 31.65% | < 100% | **PASS** |
 | **Audio Pre-Roll Buffer** | 46.88 KB | 1.5 seconds | **PASS** |
@@ -17,9 +17,10 @@
 
 * **Acquisition CPU:** 1.180%
 * **VAD/DSP CPU:** 0.157%
-* **Monitor CPU:** 5.989%
 * **Wi-Fi/Ping CPU:** 0.001%
-* **Total Measured CPU:** 7.326% *(Estimated Idle: 92.674%)*
+* **Monitor CPU (Telemetry Overhead):** 5.989% *(Note: This represents the overhead of the serial logging and monitoring code itself, not the actual audio or AI application workload.)*
+* **Total Measured CPU:** 7.326%
+* **Actual Core Application CPU:** **~1.338%** *(Total minus monitor overhead)*
 
 **Internal RAM & Heap**
 
